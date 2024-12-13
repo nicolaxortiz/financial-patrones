@@ -1,0 +1,36 @@
+.header-box{
+    background-color: #284B63;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-logo{
+    width: 50px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.header-title{
+    color: #F4F9E9;
+    font-size: 25px;
+    font-weight: bold;
+    user-select: none;
+    cursor: pointer;
+}
+
+.user-picture{
+    width: 40px;
+    border-radius: 50%;
+    border: 2px solid #F4F9E9;
+    user-select: none;
+    cursor: pointer;
+    margin: 20px;
+}
+
+.name-menu{
+    font-weight: 600;
+}
+
+

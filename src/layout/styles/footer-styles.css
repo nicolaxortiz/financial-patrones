@@ -1,0 +1,13 @@
+.footer-box{
+    background-color: #153243;
+    color: aliceblue;
+    user-select: none;
+}
+
+.footer-divider{
+    background-color: #d4d4d4;
+    color: rgb(59, 59, 59);
+    text-align: center;
+    padding: 5px 0px;
+    user-select: none;
+}

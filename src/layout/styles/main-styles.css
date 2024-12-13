@@ -1,0 +1,119 @@
+p{
+    margin: 0;
+}
+
+.accounts-box{
+    padding: 0px 25px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.accounts-title{
+    margin: 0 auto;
+    width: fit-content;
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.account-list{
+    background-color: rgb(216, 216, 216);
+    padding: 10px 0px;
+    border-radius: 5px;
+    width: 70%;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 20px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.account-list:hover{
+    background-color: rgb(180, 180, 180);
+}
+
+.account-name{
+    font-weight: 600;
+    font-size: 18px;
+    margin: 0 auto;
+    margin-bottom: 5px;
+}
+
+.account-mount{
+    margin: 0 auto;
+    color: rgb(77, 77, 77);
+}
+
+.total-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.total-name{
+    font-size: 22px;
+    font-weight: bolder;
+}
+
+.total-price{
+    font-size: 22px;
+}
+
+.move-list{
+    background-color: rgb(216, 216, 216);
+    padding: 10px 10px;
+    border-radius: 5px;
+    width: 90%;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 20px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.move-list:hover{
+    background-color: rgb(207, 207, 207);
+
+}
+
+.first-line-move{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom:7px;
+}
+
+.move-price{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.move-date{
+    font-size: 14px;
+}
+
+.second-line-move{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-bottom:7px;
+}
+
+.move-name{
+    color: rgb(54, 54, 54);
+}
+
+.third-line-move{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.move-type{
+    font-weight: 500;
+}
