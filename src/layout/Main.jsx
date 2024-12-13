@@ -10,19 +10,19 @@ export default function Main() {
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={0}>
         <Grid
-          size={{ xs: 6, md: 3 }}
+          size={{ xs: 12, md: 4, lg: 3 }}
           sx={{
             backgroundColor: "#EEF0EB",
-            borderRightColor: "#B4B8AB",
-            borderRightStyle: "solid",
-            borderRightWidth: "2px",
-            height: "80vh",
+            borderColor: "#B4B8AB",
+            borderStyle: "solid",
+            borderWidth: "2px",
+            height: "fit-content",
           }}
         >
           <Accounts />
         </Grid>
 
-        <Grid size={{ xs: 6, md: 9 }} sx={{ padding: "15px" }}>
+        <Grid size={{ xs: 12, md: 8, lg: 9 }} sx={{ padding: "15px" }}>
           <Balance />
         </Grid>
       </Grid>

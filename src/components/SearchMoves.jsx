@@ -19,17 +19,18 @@ export default function SearchMoves() {
           justifyItems: "center",
         }}
       >
-        <Grid size={{ xs: 6, md: 11 }}>
+        <Grid size={{ xs: 10, md: 11 }}>
           <TextField
             id="filled-basic"
             label="Buscar movimiento"
             variant="filled"
             color="prussianBlue"
+            size="small"
             fullWidth
           />
         </Grid>
 
-        <Grid size={{ xs: 6, md: 1 }}>
+        <Grid size={{ xs: 2, md: 1 }}>
           <IconButton aria-label="filter" onClick={handleOpen}>
             <FilterAltIcon />
           </IconButton>

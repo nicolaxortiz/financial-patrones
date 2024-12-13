@@ -29,6 +29,7 @@ export default function Accounts() {
         label="Buscar cuenta"
         variant="filled"
         color="prussianBlue"
+        size="small"
         sx={{ width: "70%" }}
       />
       <div className="account-list">
@@ -56,7 +57,7 @@ export default function Accounts() {
         count={4}
         color="prussianBlue"
         size="small"
-        sx={{ mt: "20px" }}
+        sx={{ mt: "20px", mb: "30px" }}
       />
     </div>
   );

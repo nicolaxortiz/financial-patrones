@@ -1,9 +1,6 @@
 .header-box{
     background-color: #284B63;
     height: fit-content;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
 
 .header-logo{
@@ -31,6 +28,14 @@
 
 .name-menu{
     font-weight: 600;
+}
+
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    .header-title{
+        display: none;
+    }
 }
 
 

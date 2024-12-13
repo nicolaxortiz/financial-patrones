@@ -13,6 +13,8 @@ export default function Balance() {
 
   return (
     <>
+      <p className="accounts-title">Nombre de la cuenta</p>
+      <Divider />
       {/* Conteo del dinero */}
       <TotalAmount />
 
@@ -38,7 +40,7 @@ export default function Balance() {
         count={4}
         color="prussianBlue"
         size="large"
-        sx={{ mt: "30px", justifySelf: "center" }}
+        sx={{ mt: "30px", mb: "30px", justifySelf: "center" }}
       />
     </>
   );

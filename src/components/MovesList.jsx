@@ -18,7 +18,7 @@ export default function MovesList() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
-        <Grid size={{ xs: 6, md: 6 }} onClick={handleClick}>
+        <Grid size={{ xs: 12, md: 6 }} onClick={handleClick}>
           <div className="move-list">
             <div className="first-line-move">
               <p className="move-price">$200.000</p>
@@ -63,7 +63,7 @@ export default function MovesList() {
           </MenuItem>
         </Menu>
 
-        <Grid size={{ xs: 6, md: 6 }}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <div className="move-list">
             <div className="first-line-move">
               <p className="move-price">$200.000</p>

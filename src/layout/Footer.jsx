@@ -14,21 +14,23 @@ export default function Footer() {
         <Box sx={{ flexGrow: 1 }}>
           <Grid
             container
-            spacing={0}
+            spacing={2}
             sx={{
               justifyItems: "center",
               alignItems: "center",
               textAlign: "center",
+              pt: "20px",
+              pb: "20px",
             }}
           >
-            <Grid size={{ xs: 6, md: 4 }}>
+            <Grid size={{ xs: 12, md: 4 }}>
               Desarrollado por: Nicolas Santiago Ortiz Pedraza.
             </Grid>
-            <Grid size={{ xs: 6, md: 4 }}>
+            <Grid size={{ xs: 12, md: 4 }}>
               Sistema desarrollado para la gestión de gastos y ganancias
               personales o empresariales.
             </Grid>
-            <Grid size={{ xs: 6, md: 4 }}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Stack
                 spacing={3}
                 direction="row"
