@@ -33,7 +33,7 @@ p{
 }
 
 .account-list:hover{
-    background-color: rgb(180, 180, 180);
+    background-color: #b8b8b8;
 }
 
 .account-name{
@@ -78,8 +78,7 @@ p{
 }
 
 .move-list:hover{
-    background-color: rgb(207, 207, 207);
-
+    background-color: #b8b8b8;
 }
 
 .first-line-move{

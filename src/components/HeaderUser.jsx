@@ -15,7 +15,7 @@ export default function HeaderUser() {
 
   return (
     <>
-      <Tooltip title="Nicolas Ortiz" arrow>
+      <Tooltip title="Nicolas" arrow>
         <IconButton
           onClick={toggleDrawer(true)}
           size="small"
@@ -26,7 +26,7 @@ export default function HeaderUser() {
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
         >
-          <Avatar alt="User photo" src={example_img} />
+          <Avatar alt="foto" src="nada" />
         </IconButton>
       </Tooltip>
 

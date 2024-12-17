@@ -17,14 +17,27 @@ export const theme = createTheme({
     ].join(","),
   },
   palette: {
+    action: {
+      disabledBackground: "#153243",
+      disabled: "#fff",
+    },
     alabaster: {
+      light: "#F9F9F9",
       main: "#EEF0EB",
+      dark: "#c4cdc6",
     },
     prussianBlue: {
-      main: "#153243",
+      light: "#697c99",
+      main: "#384b66",
+      dark: "#153243",
     },
     indigoDye: {
+      light: "#455b7c",
       main: "#284B63",
+      dark: "#384b66",
+    },
+    icon: {
+      main: "#8f8f8f",
     },
   },
 });

@@ -8,20 +8,23 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import example_img from "../assets/695vdh5dliib1.png";
 import { Logout } from "@mui/icons-material";
 
 export default function SideMenu({ toggleDrawer }) {
   return (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+    <Box
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={() =>
+        logout({ logoutParams: { returnTo: window.location.origin } })
+      }
+    >
       <Stack
         spacing={2}
         direction="row"
         sx={{ margin: "20px", alignItems: "center" }}
       >
-        <Avatar alt="User photo" src={example_img} />
+        <Avatar alt="Nicolas" src="nada" />
         <p className="name-menu">Nicolas Ortiz</p>
       </Stack>
 

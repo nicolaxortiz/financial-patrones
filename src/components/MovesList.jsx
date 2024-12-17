@@ -18,8 +18,8 @@ export default function MovesList() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
-        <Grid size={{ xs: 12, md: 6 }} onClick={handleClick}>
-          <div className="move-list">
+        <Grid size={{ xs: 12, md: 6 }}>
+          <div className="move-list" onClick={handleClick}>
             <div className="first-line-move">
               <p className="move-price">$200.000</p>
               <p className="move-date">12/12/2024</p>
