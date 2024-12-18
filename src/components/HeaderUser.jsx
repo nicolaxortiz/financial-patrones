@@ -3,10 +3,9 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Drawer from "@mui/material/Drawer";
-import example_img from "../assets/695vdh5dliib1.png";
 import SideMenu from "./SideMenu";
 
-export default function HeaderUser() {
+export default function HeaderUser({ user }) {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -15,7 +14,7 @@ export default function HeaderUser() {
 
   return (
     <>
-      <Tooltip title="Nicolas" arrow>
+      <Tooltip title={`${user?.name} ${user.lastname}`} arrow>
         <IconButton
           onClick={toggleDrawer(true)}
           size="small"
@@ -26,12 +25,12 @@ export default function HeaderUser() {
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
         >
-          <Avatar alt="foto" src="nada" />
+          <Avatar alt={user.name} src={user.name} />
         </IconButton>
       </Tooltip>
 
       <Drawer open={open} onClose={toggleDrawer(false)} anchor="right">
-        <SideMenu toggleDrawer={toggleDrawer} />
+        <SideMenu />
       </Drawer>
     </>
   );

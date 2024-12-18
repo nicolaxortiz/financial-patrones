@@ -7,10 +7,8 @@ import { Button } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateField } from "@mui/x-date-pickers";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+
 import "../app.css";
 
 export default function MoveModal({ handleClose, open }) {
@@ -60,7 +58,7 @@ export default function MoveModal({ handleClose, open }) {
           <DateField
             label="Fecha"
             variant="filled"
-            color={"indigoDye"}
+            color="primary"
             fullWidth
             timezone="system"
             format="DD/MM/YYYY"

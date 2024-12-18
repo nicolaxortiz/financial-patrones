@@ -9,16 +9,18 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Logout } from "@mui/icons-material";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import useLogout from "../hooks/useLogout";
+import { useNavigate } from "react-router";
 
-export default function SideMenu({ toggleDrawer }) {
+export default function SideMenu() {
+  const navigate = useNavigate();
+  const logout = useLogout();
+  const handleLogout = () => {
+    logout();
+  };
   return (
-    <Box
-      sx={{ width: 250 }}
-      role="presentation"
-      onClick={() =>
-        logout({ logoutParams: { returnTo: window.location.origin } })
-      }
-    >
+    <Box sx={{ width: 250 }} role="presentation">
       <Stack
         spacing={2}
         direction="row"
@@ -31,7 +33,20 @@ export default function SideMenu({ toggleDrawer }) {
       <Divider />
       <List>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton
+            onClick={() => {
+              navigate("/financial");
+            }}
+          >
+            <ListItemIcon>
+              <AttachMoneyIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Finanzas"} />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleLogout}>
             <ListItemIcon>
               <Logout />
             </ListItemIcon>

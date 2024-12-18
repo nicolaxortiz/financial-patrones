@@ -1,10 +1,19 @@
-import { Button } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { useNavigate } from "react-router";
+import { Alert } from "@mui/material";
+import { Collapse } from "@mui/material";
+import { usersAPI } from "../API/users";
 
 export default function RegisterForm() {
   const navigate = useNavigate();
+
+  const [open, setOpen] = useState(false);
+  const [alert, setAlert] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -12,7 +21,20 @@ export default function RegisterForm() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    setLoading(true);
+    setOpen(false);
+    setAlert("");
+    const response = await usersAPI.create(data);
+
+    if (response.status === 404 || response.status === 500) {
+      setTimeout(() => {
+        setAlert(response.message);
+        setOpen(true);
+        setLoading(false);
+      }, 3000);
+    }
+  };
 
   return (
     <div className="login-box">
@@ -27,6 +49,12 @@ export default function RegisterForm() {
       </div>
 
       <p className="title-form">Creación de cuenta</p>
+
+      <Collapse in={open}>
+        <Alert severity="error" sx={{ mb: "10px" }}>
+          {alert}
+        </Alert>
+      </Collapse>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <p className="label-form">Nombres</p>
@@ -156,15 +184,16 @@ export default function RegisterForm() {
           </p>
         )}
 
-        <Button
+        <LoadingButton
           variant="contained"
           type="submit"
           color="prussianBlue"
+          loading={loading}
           fullWidth
           sx={{ color: "#fff", mt: "20px", mb: "10px" }}
         >
           Registrar datos
-        </Button>
+        </LoadingButton>
       </form>
     </div>
   );

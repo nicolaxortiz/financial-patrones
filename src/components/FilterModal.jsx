@@ -38,24 +38,24 @@ export default function FilterModal({ handleClose, open }) {
 
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="female"
+          defaultValue="Todos"
           name="radio-buttons-group"
           sx={{ mb: "30px" }}
         >
           <FormControlLabel
-            value="female"
+            value="Todos"
             control={<Radio color="indigoDye" />}
-            label="Female"
+            label="Todos"
           />
           <FormControlLabel
-            value="male"
+            value="Ganancias"
             control={<Radio color="indigoDye" />}
-            label="Male"
+            label="Ganancias"
           />
           <FormControlLabel
-            value="other"
+            value="Gastos"
             control={<Radio color="indigoDye" />}
-            label="Other"
+            label="Gastos"
           />
         </RadioGroup>
 

@@ -6,6 +6,7 @@ import { Alert } from "@mui/material";
 import { Collapse } from "@mui/material";
 import { useNavigate } from "react-router";
 import { usersAPI } from "../API/users";
+import useLogin from "../hooks/useLogin";
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ export default function LoginForm() {
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState("");
   const [loading, setLoading] = useState(false);
+  const login = useLogin();
 
   const {
     register,
@@ -31,6 +33,13 @@ export default function LoginForm() {
         setAlert(response.message);
         setOpen(true);
         setLoading(false);
+      }, 3000);
+    }
+
+    if (response.status === 200) {
+      setTimeout(() => {
+        setLoading(false);
+        login(response.row);
       }, 3000);
     }
   };
