@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
@@ -10,15 +10,19 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Logout } from "@mui/icons-material";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import useLogout from "../hooks/useLogout";
 import { useNavigate } from "react-router";
+import { UseContext } from "../hooks/useContext";
 
 export default function SideMenu() {
   const navigate = useNavigate();
-  const logout = useLogout();
+  const { setUser } = useContext(UseContext);
+
   const handleLogout = () => {
-    logout();
+    localStorage.removeItem("user");
+    setUser(null);
+    navigate("/");
   };
+
   return (
     <Box sx={{ width: 250 }} role="presentation">
       <Stack

@@ -9,6 +9,7 @@ p{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-bottom: 40px;
 }
 
 .accounts-title{
@@ -32,6 +33,16 @@ p{
     user-select: none;
 }
 
+.account-list-skeleton{
+    background-color: rgb(216, 216, 216);
+    padding: 10px 0px;
+    border-radius: 5px;
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 20px;
+    user-select: none;
+}
+
 .account-list:hover{
     background-color: #b8b8b8;
 }
@@ -45,7 +56,7 @@ p{
 
 .account-mount{
     margin: 0 auto;
-    color: rgb(77, 77, 77);
+    color: #4d4d4d;
 }
 
 .total-box{

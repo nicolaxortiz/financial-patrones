@@ -9,7 +9,6 @@ import { useNavigate } from "react-router";
 export default function Financial() {
   const navigate = useNavigate();
   const validation = useValidateUser();
-  console.log(validation);
 
   useEffect(() => {
     if (validation) {

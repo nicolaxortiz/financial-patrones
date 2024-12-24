@@ -5,15 +5,19 @@ import MoveModal from "./MoveModal";
 import TotalAmount from "./TotalAmount";
 import SearchMoves from "./SearchMoves";
 import MovesList from "./MovesList";
+import { UseContext } from "../hooks/useContext";
 
 export default function Balance() {
   const [open, setOpen] = React.useState(false);
+  const { selectedAccount, accounts } = React.useContext(UseContext);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <>
-      <p className="accounts-title">Nombre de la cuenta</p>
+      <p className="accounts-title">
+        {selectedAccount?.name || accounts[0]?.name}
+      </p>
       <Divider />
       {/* Conteo del dinero */}
       <TotalAmount />

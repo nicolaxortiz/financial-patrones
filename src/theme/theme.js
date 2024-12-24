@@ -18,8 +18,8 @@ export const theme = createTheme({
   },
   palette: {
     action: {
-      disabledBackground: "#153243",
-      disabled: "#fff",
+      disabledBackground: "#697987",
+      disabled: "#D0D0D0",
     },
     alabaster: {
       light: "#F9F9F9",

@@ -1,20 +1,20 @@
 import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { Alert } from "@mui/material";
 import { Collapse } from "@mui/material";
 import { useNavigate } from "react-router";
 import { usersAPI } from "../API/users";
-import useLogin from "../hooks/useLogin";
+import { UseContext } from "../hooks/useContext";
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const { setUser } = useContext(UseContext);
 
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState("");
   const [loading, setLoading] = useState(false);
-  const login = useLogin();
 
   const {
     register,
@@ -39,7 +39,9 @@ export default function LoginForm() {
     if (response.status === 200) {
       setTimeout(() => {
         setLoading(false);
-        login(response.row);
+        localStorage.setItem("user", JSON.stringify(response.row));
+        setUser(response.row);
+        navigate("/financial");
       }, 3000);
     }
   };
