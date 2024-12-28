@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import Modal from "@mui/material/Modal";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Box, Stack, Button, Collapse, Alert, TextField } from "@mui/material";
 import "../app.css";
 import { accountsAPI } from "../API/accounts";
@@ -13,25 +13,12 @@ export default function AccountModal({
   method,
   selectedAccount,
 }) {
-  const { setAccounts, user, setLoadingAccounts } = useContext(UseContext);
+  const { user, setLoadingAccounts, setFetchAccounts, fetchAccounts } =
+    useContext(UseContext);
 
   const [openAlert, setOpenAlert] = useState(false);
   const [alert, setAlert] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    maxWidth: 400,
-    minWidth: 250,
-    bgcolor: "#F4F9E9",
-    border: "2px solid #284b63",
-    borderRadius: "5px",
-    boxShadow: 24,
-    p: 4,
-  };
 
   const {
     register,
@@ -52,17 +39,12 @@ export default function AccountModal({
         : await accountsAPI.update({ name: data.name, id: selectedAccount.id });
 
     if (response.status === 200) {
-      const responseGet = await accountsAPI.getByID(user.id);
-
-      if (responseGet.status === 200) {
-        setTimeout(() => {
-          localStorage.setItem("accounts", JSON.stringify(responseGet.rows));
-          setAccounts(responseGet.rows);
-          setLoading(false);
-          reset();
-          handleClose();
-        }, 2000);
-      }
+      setFetchAccounts(!fetchAccounts);
+      setTimeout(() => {
+        setLoading(false);
+        reset();
+        handleClose();
+      }, 2000);
     }
 
     if (response.status === 500) {
@@ -70,6 +52,7 @@ export default function AccountModal({
         setAlert(response.message);
         setOpenAlert(true);
         setLoading(false);
+        setLoadingAccounts(false);
       }, 2000);
     }
   };
@@ -81,8 +64,12 @@ export default function AccountModal({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
-        <p className="title-modal">¿Cual es el nuevo nombre de la cuenta</p>
+      <Box className="modal">
+        <p className="title-modal">
+          {method === "create"
+            ? "Creación de una cuenta nueva"
+            : "Edición de una cuenta"}
+        </p>
 
         <Collapse in={openAlert}>
           <Alert severity="error" sx={{ mb: "10px" }}>
@@ -101,7 +88,7 @@ export default function AccountModal({
             fullWidth
             {...register("name", {
               required: true,
-              pattern: /^[A-Za-z ]+$/i,
+              pattern: /^[A-Za-zñÑ0-9 ]+$/,
             })}
           />
 
@@ -112,7 +99,7 @@ export default function AccountModal({
           )}
           {errors.name?.type === "pattern" && (
             <p className="input-information">
-              * El nombre no puede contener números o caracteres especiales
+              * El nombre no puede contener caracteres especiales
             </p>
           )}
 
@@ -121,7 +108,15 @@ export default function AccountModal({
             spacing={2}
             sx={{ justifyContent: "end", mt: "30px" }}
           >
-            <Button variant="outlined" color="indigoDye" onClick={handleClose}>
+            <Button
+              variant="outlined"
+              disabled={loading}
+              color="indigoDye"
+              onClick={() => {
+                handleClose();
+                reset();
+              }}
+            >
               Cancelar
             </Button>
             <LoadingButton

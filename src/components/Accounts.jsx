@@ -5,9 +5,11 @@ import { accountsAPI } from "../API/accounts";
 import AddIcon from "@mui/icons-material/Add";
 import { UseContext } from "../hooks/useContext";
 import { Delete, Edit } from "@mui/icons-material";
+import { set } from "react-hook-form";
 
 export default function Accounts() {
   const [openModal, setOpenModal] = React.useState(false);
+  const [accountMenu, setAccountMenu] = React.useState(null);
   const [method, setMethod] = React.useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const {
@@ -16,16 +18,24 @@ export default function Accounts() {
     user,
     loadingAccounts,
     setLoadingAccounts,
-    setSelectedAccount,
     selectedAccount,
+    setSelectedAccount,
+    setFetchAccounts,
+    fetchAccounts,
+    setFilterMoves,
   } = useContext(UseContext);
 
   const openMenu = Boolean(anchorEl);
 
+  const handleClickAccount = (account) => {
+    setFilterMoves("all");
+    setSelectedAccount(account);
+  };
+
   const handleClickMenu = (event, account) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
-    setSelectedAccount(account);
+    setAccountMenu(account);
   };
 
   const handleCloseMenu = () => {
@@ -39,25 +49,23 @@ export default function Accounts() {
   };
 
   const handleDeleteAccount = async () => {
-    const response = await accountsAPI.delete(selectedAccount.id);
+    const response = await accountsAPI.delete(accountMenu.id);
 
+    setLoadingAccounts(true);
     if (response.status === 200) {
-      const responseGet = await accountsAPI.getByID(user.id);
-
-      if (responseGet.status === 200) {
-        localStorage.setItem("accounts", JSON.stringify(responseGet.rows));
-        setAccounts(responseGet.rows);
-      }
+      setFetchAccounts(!fetchAccounts);
     }
   };
 
   useEffect(() => {
     async function fetchAccounts() {
       const response = await accountsAPI.getByID(user.id);
+      setLoadingAccounts(true);
 
       if (response.status === 200) {
         localStorage.setItem("accounts", JSON.stringify(response.rows));
         setAccounts(response.rows);
+        setSelectedAccount(response.rows[0]);
       }
 
       if (response.status === 404) {
@@ -68,9 +76,13 @@ export default function Accounts() {
     if (user) {
       fetchAccounts();
     }
-  }, [user]);
+  }, [user, fetchAccounts]);
 
   useEffect(() => {
+    if (selectedAccount === null && accounts.length > 0) {
+      setSelectedAccount(accounts[0]);
+    }
+
     if (accounts) {
       setTimeout(() => {
         setLoadingAccounts(false);
@@ -99,14 +111,14 @@ export default function Accounts() {
         handleClose={handleCloseModal}
         open={openModal}
         method={method}
-        selectedAccount={selectedAccount}
+        selectedAccount={accountMenu}
       />
 
       {loadingAccounts &&
         Array.from({ length: 6 }).map((_, index) => (
           <Skeleton
             variant="rounded"
-            height={"50px"}
+            height={"45px"}
             animation="wave"
             className="account-list-skeleton"
             key={index}
@@ -116,12 +128,16 @@ export default function Accounts() {
       {!loadingAccounts &&
         accounts.map((account) => (
           <div
-            className="account-list"
+            className={
+              account.id === selectedAccount.id
+                ? "account-list-selected"
+                : "account-list"
+            }
             key={account.id}
             onContextMenu={(event) => handleClickMenu(event, account)}
+            onClick={() => handleClickAccount(account)}
           >
             <p className="account-name">{account.name}</p>
-            <p className="account-mount">$ {account.amount}</p>
           </div>
         ))}
 
@@ -152,7 +168,6 @@ export default function Accounts() {
         </MenuItem>
         <MenuItem
           onClick={() => {
-            setLoadingAccounts(true);
             handleDeleteAccount();
             handleCloseMenu();
           }}
@@ -173,14 +188,13 @@ export default function Accounts() {
             }}
             key={index}
             style={{
-              height: "50px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              color: "#4d4d4d",
+              color: "#6B6B6B",
             }}
           >
-            <AddIcon sx={{ fontSize: "30px" }} />
+            <AddIcon sx={{ fontSize: "25px", marginY: "10px" }} />
           </div>
         ))}
     </div>

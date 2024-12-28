@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Divider, Pagination } from "@mui/material";
+import { Button, Divider, Pagination, Skeleton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import MoveModal from "./MoveModal";
 import TotalAmount from "./TotalAmount";
@@ -9,16 +9,29 @@ import { UseContext } from "../hooks/useContext";
 
 export default function Balance() {
   const [open, setOpen] = React.useState(false);
-  const { selectedAccount, accounts } = React.useContext(UseContext);
+  const { selectedAccount, loadingAccounts, loadingMoves } =
+    React.useContext(UseContext);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <>
-      <p className="accounts-title">
-        {selectedAccount?.name || accounts[0]?.name}
-      </p>
+      {!loadingAccounts && (
+        <p className="accounts-title">
+          Balance de la cuenta: {selectedAccount?.name}
+        </p>
+      )}
+
+      {loadingAccounts && (
+        <Skeleton
+          variant="text"
+          animation="wave"
+          sx={{ fontSize: "24px", marginX: "50px", marginBottom: "20px" }}
+        />
+      )}
+
       <Divider />
+
       {/* Conteo del dinero */}
       <TotalAmount />
 
@@ -31,6 +44,7 @@ export default function Balance() {
         color="indigoDye"
         sx={{ color: "#fff" }}
         startIcon={<AddIcon />}
+        disabled={loadingMoves}
         onClick={handleOpen}
       >
         Añadir movimiento
@@ -40,12 +54,25 @@ export default function Balance() {
 
       <MovesList />
 
-      <Pagination
-        count={4}
-        color="prussianBlue"
-        size="large"
-        sx={{ mt: "30px", mb: "30px", justifySelf: "center" }}
-      />
+      <div className="pagination">
+        {loadingMoves && (
+          <Skeleton
+            variant="rounded"
+            animation="wave"
+            width={300}
+            height={40}
+          />
+        )}
+
+        {!loadingMoves && (
+          <Pagination
+            count={4}
+            color="prussianBlue"
+            size="large"
+            disabled={loadingMoves}
+          />
+        )}
+      </div>
     </>
   );
 }

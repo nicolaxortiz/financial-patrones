@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useForm, Controller, set } from "react-hook-form";
 import Modal from "@mui/material/Modal";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -7,8 +8,19 @@ import { Box } from "@mui/material";
 import { Stack } from "@mui/material";
 import { Button } from "@mui/material";
 import "../app.css";
+import { UseContext } from "../hooks/useContext";
 
 export default function FilterModal({ handleClose, open }) {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm();
+
+  const { setFilterMoves, setFetchMoves, fetchMoves } = useContext(UseContext);
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -26,6 +38,12 @@ export default function FilterModal({ handleClose, open }) {
     alignItems: "center",
   };
 
+  const onSubmit = (data) => {
+    setFilterMoves(data.filter);
+    setFetchMoves(!fetchMoves);
+    handleClose();
+  };
+
   return (
     <Modal
       open={open}
@@ -36,37 +54,58 @@ export default function FilterModal({ handleClose, open }) {
       <Box sx={style}>
         <p className="title-modal">Filtro de búsqueda para movimientos</p>
 
-        <RadioGroup
-          aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="Todos"
-          name="radio-buttons-group"
-          sx={{ mb: "30px" }}
-        >
-          <FormControlLabel
-            value="Todos"
-            control={<Radio color="indigoDye" />}
-            label="Todos"
-          />
-          <FormControlLabel
-            value="Ganancias"
-            control={<Radio color="indigoDye" />}
-            label="Ganancias"
-          />
-          <FormControlLabel
-            value="Gastos"
-            control={<Radio color="indigoDye" />}
-            label="Gastos"
-          />
-        </RadioGroup>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Controller
+            render={({ field }) => (
+              <RadioGroup aria-label="Filtro" {...field}>
+                <FormControlLabel
+                  value={"all"}
+                  control={<Radio color="indigoDye" />}
+                  label="Todos"
+                />
+                <FormControlLabel
+                  value={"earnings"}
+                  control={<Radio color="indigoDye" />}
+                  label="Ganancias"
+                />
 
-        <Stack direction="row" spacing={2} sx={{ justifyContent: "end" }}>
-          <Button variant="outlined" color="indigoDye" onClick={handleClose}>
-            Cancelar
-          </Button>
-          <Button variant="contained" color="indigoDye" sx={{ color: "#fff" }}>
-            Guardar
-          </Button>
-        </Stack>
+                <FormControlLabel
+                  value={"expenses"}
+                  control={<Radio color="indigoDye" />}
+                  label="Gastos"
+                />
+              </RadioGroup>
+            )}
+            name="filter"
+            defaultValue="Todos"
+            control={control}
+          />
+
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ justifyContent: "end", mt: "20px" }}
+          >
+            <Button
+              variant="outlined"
+              color="indigoDye"
+              onClick={() => {
+                handleClose();
+                reset();
+              }}
+            >
+              Cancelar
+            </Button>
+            <Button
+              variant="contained"
+              color="indigoDye"
+              type="submit"
+              sx={{ color: "#fff" }}
+            >
+              Guardar
+            </Button>
+          </Stack>
+        </form>
       </Box>
     </Modal>
   );

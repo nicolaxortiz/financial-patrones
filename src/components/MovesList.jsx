@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { UseContext } from "../hooks/useContext";
+import { Skeleton } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Delete, Edit } from "@mui/icons-material";
+import { movesAPI } from "../API/moves";
+import AddIcon from "@mui/icons-material/Add";
+import dateParser from "../functions/dateParser";
 
 export default function MovesList() {
+  const {
+    selectedAccount,
+    user,
+    setMoves,
+    moves,
+    setLoadingMoves,
+    loadingMoves,
+    fetchMoves,
+    filterMoves,
+  } = useContext(UseContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -15,26 +30,70 @@ export default function MovesList() {
     setAnchorEl(null);
   };
 
+  useEffect(() => {
+    async function fetchMovesList() {
+      const response = await movesAPI.getByAccountId(
+        selectedAccount.id,
+        filterMoves
+      );
+      setLoadingMoves(true);
+
+      if (response.status === 200) {
+        setMoves(response.rows);
+      }
+
+      if (response.status === 404) {
+        setMoves([]);
+      }
+    }
+
+    if (user) {
+      fetchMovesList();
+    }
+  }, [selectedAccount, fetchMoves]);
+
+  useEffect(() => {
+    if (moves) {
+      setTimeout(() => {
+        setLoadingMoves(false);
+      }, 2000);
+    }
+  }, [moves]);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}>
-        <Grid size={{ xs: 12, md: 6 }}>
-          <div className="move-list" onClick={handleClick}>
-            <div className="first-line-move">
-              <p className="move-price">$200.000</p>
-              <p className="move-date">12/12/2024</p>
-            </div>
+      <Grid container spacing={0}>
+        {loadingMoves &&
+          Array.from({ length: 6 }).map((_, index) => (
+            <Grid size={{ xs: 12, md: 6 }} key={index}>
+              <Skeleton
+                variant="rounded"
+                height={"80px"}
+                animation="wave"
+                className="move-list-skeleton"
+              />
+            </Grid>
+          ))}
 
-            <div className="second-line-move">
-              <p className="move-name">Gasto en bobadas</p>
-            </div>
+        {!loadingMoves &&
+          moves.map((move) => (
+            <Grid size={{ xs: 12, md: 6 }} key={move.id}>
+              <div className="move-list" onClick={handleClick}>
+                <div className="first-line-move">
+                  <p className="move-price">${move.amount.toLocaleString()}</p>
+                  <p className="move-date">{dateParser(move.date)}</p>
+                </div>
 
-            <div className="third-line-move">
-              <p className="move-type">Gasto</p>
-              <p className="move-account">Cuenta: General</p>
-            </div>
-          </div>
-        </Grid>
+                <div className="second-line-move">
+                  <p className="move-name">{move.name}</p>
+                </div>
+
+                <div className="third-line-move">
+                  <p className="move-type">{move.type}</p>
+                </div>
+              </div>
+            </Grid>
+          ))}
 
         <Menu
           id="basic-menu"
@@ -63,23 +122,22 @@ export default function MovesList() {
           </MenuItem>
         </Menu>
 
-        <Grid size={{ xs: 12, md: 6 }}>
-          <div className="move-list">
-            <div className="first-line-move">
-              <p className="move-price">$200.000</p>
-              <p className="move-date">12/12/2024</p>
-            </div>
-
-            <div className="second-line-move">
-              <p className="move-name">Gasto en bobadas</p>
-            </div>
-
-            <div className="third-line-move">
-              <p className="move-type">Gasto</p>
-              <p className="move-account">Cuenta: General</p>
-            </div>
-          </div>
-        </Grid>
+        {!loadingMoves &&
+          Array.from({ length: 6 - moves.length }).map((_, index) => (
+            <Grid size={{ xs: 12, md: 6 }} key={index}>
+              <div
+                className="move-list-empty"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: "#6B6B6B",
+                }}
+              >
+                <div style={{ padding: "40px" }}></div>
+              </div>
+            </Grid>
+          ))}
       </Grid>
     </Box>
   );

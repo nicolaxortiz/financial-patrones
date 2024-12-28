@@ -16,13 +16,15 @@ export default function Main() {
             borderColor: "#B4B8AB",
             borderStyle: "solid",
             borderWidth: "2px",
-            height: "fit-content",
           }}
         >
           <Accounts />
         </Grid>
 
-        <Grid size={{ xs: 12, md: 8, lg: 9 }} sx={{ padding: "15px" }}>
+        <Grid
+          size={{ xs: 12, md: 8, lg: 9 }}
+          sx={{ padding: "15px", display: "flex", flexDirection: "column" }}
+        >
           <Balance />
         </Grid>
       </Grid>
