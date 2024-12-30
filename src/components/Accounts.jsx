@@ -84,9 +84,7 @@ export default function Accounts() {
     }
 
     if (accounts) {
-      setTimeout(() => {
-        setLoadingAccounts(false);
-      }, 2000);
+      setLoadingAccounts(false);
     }
   }, [accounts]);
 

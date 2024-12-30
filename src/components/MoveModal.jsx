@@ -15,14 +15,18 @@ import { useForm } from "react-hook-form";
 import "../app.css";
 import { UseContext } from "../hooks/useContext";
 import { movesAPI } from "../API/moves";
+import dateParser from "../functions/dateParser";
+import dayjs from "dayjs";
 
-export default function MoveModal({ handleClose, open }) {
+export default function MoveModal({ handleClose, open, method }) {
   const {
     accounts,
     setFetchMoves,
     fetchMoves,
     setFetchAccounts,
     fetchAccounts,
+    selectedMove,
+    selectedAccount,
   } = useContext(UseContext);
 
   const [openAlert, setOpenAlert] = React.useState(false);
@@ -36,8 +40,14 @@ export default function MoveModal({ handleClose, open }) {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setAlert("");
+    setOpenAlert(false);
     setLoading(true);
-    const response = await movesAPI.create(data);
+
+    const response =
+      method === "create"
+        ? await movesAPI.create(data)
+        : await movesAPI.update(selectedMove.id, data);
 
     if (response.status === 200) {
       setFetchMoves(!fetchMoves);
@@ -46,6 +56,15 @@ export default function MoveModal({ handleClose, open }) {
         setLoading(false);
         handleClose();
         reset();
+      }, 2000);
+    }
+
+    if (response.status === 404) {
+      setTimeout(() => {
+        setAlert(response.message);
+        setOpenAlert(true);
+        setLoading(false);
+        setLoadingAccounts(false);
       }, 2000);
     }
 
@@ -67,7 +86,11 @@ export default function MoveModal({ handleClose, open }) {
       aria-describedby="modal-modal-description"
     >
       <Box className="modal">
-        <p className="title-modal">Registro de un movimiento</p>
+        <p className="title-modal">
+          {method === "create"
+            ? "Creación de un nuevo movimiento"
+            : "Edición de un movimiento"}
+        </p>
 
         <Collapse in={openAlert}>
           <Alert severity="error" sx={{ mb: "10px" }}>
@@ -82,7 +105,7 @@ export default function MoveModal({ handleClose, open }) {
             label="Cuenta"
             variant="filled"
             color="indigoDye"
-            defaultValue=""
+            defaultValue={method === "update" ? selectedAccount.id : ""}
             fullWidth
             sx={errors.id_account ? { mb: "0px" } : { mb: "20px" }}
             {...register("id_account", {
@@ -105,12 +128,13 @@ export default function MoveModal({ handleClose, open }) {
             id="filled-basic"
             label="Nombre del movimiento"
             variant="filled"
+            defaultValue={method === "update" ? selectedMove.name : ""}
             color="indigoDye"
             fullWidth
             sx={errors.name ? { mb: "0px" } : { mb: "20px" }}
             {...register("name", {
               required: true,
-              pattern: /^[A-Za-zñÑ0-9 ]+$/,
+              pattern: /^[A-Za-zñÑ0-9áéíóúÁÉÍÓÚ ]+$/,
             })}
           />
           {errors.name?.type === "required" && (
@@ -130,6 +154,7 @@ export default function MoveModal({ handleClose, open }) {
             type="number"
             variant="filled"
             color="indigoDye"
+            defaultValue={method === "update" ? selectedMove.amount : ""}
             fullWidth
             sx={errors.amount ? { mb: "0px" } : { mb: "20px" }}
             {...register("amount", {
@@ -154,6 +179,9 @@ export default function MoveModal({ handleClose, open }) {
               label="Fecha"
               variant="filled"
               color="primary"
+              defaultValue={
+                method === "update" ? dayjs(selectedMove.date) : dayjs()
+              }
               fullWidth
               timezone="system"
               format="DD/MM/YYYY"
@@ -175,7 +203,7 @@ export default function MoveModal({ handleClose, open }) {
             label="Tipo"
             variant="filled"
             color="indigoDye"
-            defaultValue=""
+            defaultValue={method === "update" ? selectedMove.type : ""}
             fullWidth
             sx={errors.type ? { mb: "0px" } : { mb: "20px" }}
             {...register("type", {

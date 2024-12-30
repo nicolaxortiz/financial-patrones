@@ -63,7 +63,7 @@ export default function RegisterForm() {
           className={errors.name ? "input-form-wm" : "input-form"}
           {...register("name", {
             required: true,
-            pattern: /^[A-Za-z ]+$/i,
+            pattern: /^[A-Za-zñÑáéíóúÁÉÍÓÚ ]+$/,
           })}
         />
         {errors.name?.type === "required" && (
@@ -81,7 +81,7 @@ export default function RegisterForm() {
           className={errors.lastname ? "input-form-wm" : "input-form"}
           {...register("lastname", {
             required: true,
-            pattern: /^[A-Za-z ]+$/i,
+            pattern: /^[A-Za-zñÑáéíóúÁÉÍÓÚ ]+$/,
           })}
         />
         {errors.lastname?.type === "required" && (
@@ -171,7 +171,7 @@ export default function RegisterForm() {
           className={errors.password ? "input-form-wm" : "input-form"}
           {...register("password", {
             required: true,
-            pattern: /^(?=.*[A-Z])(?=.*\d).{9,}$/,
+            pattern: /^(?=.*[A-ZáéíóúÁÉÍÓÚ])(?=.*\d).{9,}$/,
           })}
         />
         {errors.password?.type === "required" && (

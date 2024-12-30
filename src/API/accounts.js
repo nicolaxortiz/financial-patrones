@@ -28,8 +28,8 @@ export const accountsAPI = {
     return dataResponse;
   },
 
-  update: async (data) => {
-    const response = await fetch(`${url}/update`, {
+  update: async (id, data) => {
+    const response = await fetch(`${url}/update/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

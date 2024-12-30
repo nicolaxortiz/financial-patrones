@@ -8,6 +8,7 @@ export default function useDataStates() {
   const [fetchAccounts, setFetchAccounts] = React.useState(false);
   const [moves, setMoves] = React.useState([]);
   const [loadingMoves, setLoadingMoves] = React.useState(true);
+  const [selectedMove, setSelectedMove] = React.useState(null);
   const [fetchMoves, setFetchMoves] = React.useState(false);
   const [filterMoves, setFilterMoves] = React.useState("all");
   return {
@@ -25,6 +26,8 @@ export default function useDataStates() {
     setMoves,
     loadingMoves,
     setLoadingMoves,
+    selectedMove,
+    setSelectedMove,
     fetchMoves,
     setFetchMoves,
     filterMoves,

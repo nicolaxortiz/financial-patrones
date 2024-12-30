@@ -7,10 +7,14 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Delete, Edit } from "@mui/icons-material";
 import { movesAPI } from "../API/moves";
-import AddIcon from "@mui/icons-material/Add";
 import dateParser from "../functions/dateParser";
 
-export default function MovesList() {
+export default function MovesList({
+  handleOpen,
+  setMethod,
+  setCountPages,
+  page,
+}) {
   const {
     selectedAccount,
     user,
@@ -18,13 +22,18 @@ export default function MovesList() {
     moves,
     setLoadingMoves,
     loadingMoves,
+    setFetchMoves,
+    setSelectedMove,
+    selectedMove,
     fetchMoves,
     filterMoves,
   } = useContext(UseContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
+
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+  const handleClick = (event, move) => {
     setAnchorEl(event.currentTarget);
+    setSelectedMove(move);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -34,31 +43,41 @@ export default function MovesList() {
     async function fetchMovesList() {
       const response = await movesAPI.getByAccountId(
         selectedAccount.id,
-        filterMoves
+        filterMoves,
+        (page - 1) * 6
       );
       setLoadingMoves(true);
 
       if (response.status === 200) {
         setMoves(response.rows);
+        setCountPages(response.count);
       }
 
       if (response.status === 404) {
         setMoves([]);
+        setCountPages(0);
       }
     }
 
     if (user) {
       fetchMovesList();
     }
-  }, [selectedAccount, fetchMoves]);
+  }, [selectedAccount, fetchMoves, page]);
 
   useEffect(() => {
     if (moves) {
-      setTimeout(() => {
-        setLoadingMoves(false);
-      }, 2000);
+      setLoadingMoves(false);
     }
   }, [moves]);
+
+  const handleDeleteMove = async () => {
+    const response = await movesAPI.delete(selectedMove.id, selectedAccount.id);
+
+    setLoadingMoves(true);
+    if (response.status === 200) {
+      setFetchMoves(!fetchMoves);
+    }
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -78,7 +97,10 @@ export default function MovesList() {
         {!loadingMoves &&
           moves.map((move) => (
             <Grid size={{ xs: 12, md: 6 }} key={move.id}>
-              <div className="move-list" onClick={handleClick}>
+              <div
+                className="move-list"
+                onClick={(event) => handleClick(event, move)}
+              >
                 <div className="first-line-move">
                   <p className="move-price">${move.amount.toLocaleString()}</p>
                   <p className="move-date">{dateParser(move.date)}</p>
@@ -112,11 +134,24 @@ export default function MovesList() {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem
+            onClick={() => {
+              setMethod("update");
+              handleOpen();
+              handleClose();
+            }}
+            disableRipple
+          >
             <Edit sx={{ mr: "10px" }} />
             Editar movimiento
           </MenuItem>
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem
+            onClick={() => {
+              handleDeleteMove();
+              handleClose();
+            }}
+            disableRipple
+          >
             <Delete sx={{ mr: "10px" }} />
             Eliminar movimiento
           </MenuItem>

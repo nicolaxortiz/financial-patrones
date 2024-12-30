@@ -36,7 +36,7 @@ export default function AccountModal({
     const response =
       method === "create"
         ? await accountsAPI.create({ name: data.name, id_user: user.id })
-        : await accountsAPI.update({ name: data.name, id: selectedAccount.id });
+        : await accountsAPI.update(selectedAccount.id, data);
 
     if (response.status === 200) {
       setFetchAccounts(!fetchAccounts);
@@ -81,14 +81,14 @@ export default function AccountModal({
           <TextField
             id="filled-basic"
             label="Nombre de la cuenta"
-            placeholder={method === "update" ? selectedAccount.name : ""}
+            defaultValue={method === "update" ? selectedAccount.name : ""}
             variant="filled"
             color="indigoDye"
             disabled={loading}
             fullWidth
             {...register("name", {
               required: true,
-              pattern: /^[A-Za-zñÑ0-9 ]+$/,
+              pattern: /^[A-Za-zñÑ0-9 áéíóúÁÉÍÓÚ]+$/,
             })}
           />
 

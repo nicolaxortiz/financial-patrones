@@ -77,7 +77,7 @@ export default function FilterModal({ handleClose, open }) {
               </RadioGroup>
             )}
             name="filter"
-            defaultValue="Todos"
+            defaultValue="all"
             control={control}
           />
 

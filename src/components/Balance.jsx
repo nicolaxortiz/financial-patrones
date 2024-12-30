@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Divider, Pagination, Skeleton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import MoveModal from "./MoveModal";
@@ -8,11 +8,22 @@ import MovesList from "./MovesList";
 import { UseContext } from "../hooks/useContext";
 
 export default function Balance() {
+  const [method, setMethod] = React.useState("");
   const [open, setOpen] = React.useState(false);
+  const [page, setPage] = React.useState(1);
+  const [countPages, setCountPages] = React.useState(0);
   const { selectedAccount, loadingAccounts, loadingMoves } =
     React.useContext(UseContext);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleChangePage = (event, value) => {
+    setPage(value);
+  };
+
+  useEffect(() => {
+    setPage(1);
+  }, [selectedAccount]);
 
   return (
     <>
@@ -37,7 +48,7 @@ export default function Balance() {
 
       <Divider />
 
-      <SearchMoves />
+      <SearchMoves page={page} setCountPages={setCountPages} />
 
       <Button
         variant="contained"
@@ -45,33 +56,32 @@ export default function Balance() {
         sx={{ color: "#fff" }}
         startIcon={<AddIcon />}
         disabled={loadingMoves}
-        onClick={handleOpen}
+        onClick={() => {
+          setMethod("create");
+          handleOpen();
+        }}
       >
         Añadir movimiento
       </Button>
 
-      <MoveModal handleClose={handleClose} open={open} />
+      <MoveModal handleClose={handleClose} open={open} method={method} />
 
-      <MovesList />
+      <MovesList
+        handleOpen={handleOpen}
+        setMethod={setMethod}
+        setCountPages={setCountPages}
+        page={page}
+      />
 
       <div className="pagination">
-        {loadingMoves && (
-          <Skeleton
-            variant="rounded"
-            animation="wave"
-            width={300}
-            height={40}
-          />
-        )}
-
-        {!loadingMoves && (
-          <Pagination
-            count={4}
-            color="prussianBlue"
-            size="large"
-            disabled={loadingMoves}
-          />
-        )}
+        <Pagination
+          count={Math.ceil(countPages / 6)}
+          color="prussianBlue"
+          size="large"
+          disabled={loadingMoves}
+          onChange={handleChangePage}
+          page={page}
+        />
       </div>
     </>
   );
