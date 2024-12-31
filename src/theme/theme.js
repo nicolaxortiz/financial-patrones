@@ -35,6 +35,13 @@ export const theme = createTheme({
       light: "#455b7c",
       main: "#284B63",
       dark: "#384b66",
+      contrastText: "#fff",
+    },
+    littleBlue: {
+      light: "#63799c",
+      main: "#5a7c96",
+      dark: "#455b7c",
+      contrastText: "#fff",
     },
     icon: {
       main: "#8f8f8f",

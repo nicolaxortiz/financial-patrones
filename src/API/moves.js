@@ -31,13 +31,14 @@ export const movesAPI = {
     return dataResponse;
   },
 
-  update: async (id, data) => {
+  update: async (id, data, backType, backAmount, earnings, expenses) => {
+    const newData = { ...data, backType, backAmount, earnings, expenses };
     const response = await fetch(`${url}/update/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(newData),
     });
 
     const dataResponse = await response.json();
@@ -45,13 +46,14 @@ export const movesAPI = {
     return dataResponse;
   },
 
-  delete: async (id, id_account) => {
+  delete: async (id, id_account, type, amount) => {
+    const newData = { id_account, type, amount };
     const response = await fetch(`${url}/delete/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id_account }),
+      body: JSON.stringify(newData),
     });
 
     const dataResponse = await response.json();

@@ -42,7 +42,7 @@ export default function MovesList({
   useEffect(() => {
     async function fetchMovesList() {
       const response = await movesAPI.getByAccountId(
-        selectedAccount.id,
+        selectedAccount?.id,
         filterMoves,
         (page - 1) * 6
       );
@@ -66,12 +66,19 @@ export default function MovesList({
 
   useEffect(() => {
     if (moves) {
-      setLoadingMoves(false);
+      setTimeout(() => {
+        setLoadingMoves(false);
+      }, 1000);
     }
   }, [moves]);
 
   const handleDeleteMove = async () => {
-    const response = await movesAPI.delete(selectedMove.id, selectedAccount.id);
+    const response = await movesAPI.delete(
+      selectedMove.id,
+      selectedAccount.id,
+      selectedMove.type,
+      selectedMove.amount
+    );
 
     setLoadingMoves(true);
     if (response.status === 200) {
@@ -102,7 +109,9 @@ export default function MovesList({
                 onClick={(event) => handleClick(event, move)}
               >
                 <div className="first-line-move">
-                  <p className="move-price">${move.amount.toLocaleString()}</p>
+                  <p className="move-price">
+                    ${parseInt(move.amount).toLocaleString()}
+                  </p>
                   <p className="move-date">{dateParser(move.date)}</p>
                 </div>
 

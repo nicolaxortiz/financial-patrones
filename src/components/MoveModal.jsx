@@ -47,7 +47,14 @@ export default function MoveModal({ handleClose, open, method }) {
     const response =
       method === "create"
         ? await movesAPI.create(data)
-        : await movesAPI.update(selectedMove.id, data);
+        : await movesAPI.update(
+            selectedMove.id,
+            data,
+            selectedMove.type,
+            selectedMove.amount,
+            selectedAccount.earnings,
+            selectedAccount.expenses
+          );
 
     if (response.status === 200) {
       setFetchMoves(!fetchMoves);

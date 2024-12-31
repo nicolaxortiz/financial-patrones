@@ -13,7 +13,7 @@ export default function Header() {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    if (user) setLoading(false);
+    setLoading(false);
   }, [user]);
 
   return (

@@ -55,7 +55,7 @@ export default function Balance() {
         color="indigoDye"
         sx={{ color: "#fff" }}
         startIcon={<AddIcon />}
-        disabled={loadingMoves}
+        disabled={loadingMoves || selectedAccount === null}
         onClick={() => {
           setMethod("create");
           handleOpen();

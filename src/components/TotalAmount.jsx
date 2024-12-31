@@ -5,15 +5,7 @@ import { Skeleton } from "@mui/material";
 import { UseContext } from "../hooks/useContext";
 
 export default function TotalAmount() {
-  const { moves, loadingMoves } = useContext(UseContext);
-
-  const totalEarnings = moves
-    .filter((move) => move.type === "Ganancia")
-    .reduce((acc, move) => acc + move.amount, 0);
-
-  const totalExpenses = moves
-    .filter((move) => move.type === "Gasto")
-    .reduce((acc, move) => acc + move.amount, 0);
+  const { moves, loadingAccounts, selectedAccount } = useContext(UseContext);
 
   return (
     <Box sx={{ mb: "20px" }}>
@@ -22,7 +14,7 @@ export default function TotalAmount() {
           <div className="total-box">
             <p className="total-name">Ganancias</p>
             <p className="total-price">
-              {loadingMoves ? (
+              {loadingAccounts ? (
                 <Skeleton
                   variant="text"
                   width={150}
@@ -30,7 +22,7 @@ export default function TotalAmount() {
                   sx={{ fontSize: "22px" }}
                 />
               ) : (
-                `$${totalEarnings.toLocaleString()}`
+                `$${parseInt(selectedAccount?.earnings).toLocaleString()}`
               )}
             </p>
           </div>
@@ -40,7 +32,7 @@ export default function TotalAmount() {
           <div className="total-box">
             <p className="total-name">Gastos</p>
             <p className="total-price">
-              {loadingMoves ? (
+              {loadingAccounts ? (
                 <Skeleton
                   variant="text"
                   width={150}
@@ -48,7 +40,7 @@ export default function TotalAmount() {
                   sx={{ fontSize: "22px" }}
                 />
               ) : (
-                `$${totalExpenses.toLocaleString()}`
+                `$${parseInt(selectedAccount?.expenses).toLocaleString()}`
               )}
             </p>
           </div>
@@ -58,7 +50,7 @@ export default function TotalAmount() {
           <div className="total-box">
             <p className="total-name">Total</p>
             <p className="total-price">
-              {loadingMoves ? (
+              {loadingAccounts ? (
                 <Skeleton
                   variant="text"
                   width={150}
@@ -66,7 +58,10 @@ export default function TotalAmount() {
                   sx={{ fontSize: "22px" }}
                 />
               ) : (
-                `$${(totalEarnings - totalExpenses).toLocaleString()}`
+                `$${(
+                  parseInt(selectedAccount?.earnings) -
+                  parseInt(selectedAccount?.expenses)
+                ).toLocaleString()}`
               )}
             </p>
           </div>

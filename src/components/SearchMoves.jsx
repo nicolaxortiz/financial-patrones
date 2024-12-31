@@ -9,7 +9,7 @@ import { movesAPI } from "../API/moves";
 
 export default function SearchMoves({ page, setCountPages }) {
   const [name, setName] = React.useState("");
-  const { loadingMoves, selectedAccount, setLoadingMoves, setMoves } =
+  const { loadingMoves, selectedAccount, setMoves, setFetchMoves, fetchMoves } =
     useContext(UseContext);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -18,20 +18,24 @@ export default function SearchMoves({ page, setCountPages }) {
   const handleSearchName = async (data) => {
     setName(data);
 
-    const response = await movesAPI.getByName(
-      selectedAccount.id,
-      data,
-      (page - 1) * 6
-    );
+    if (data != "") {
+      const response = await movesAPI.getByName(
+        selectedAccount.id,
+        data,
+        (page - 1) * 6
+      );
 
-    if (response.status === 200) {
-      setMoves(response.rows);
-      setCountPages(response.count);
-    }
+      if (response.status === 200) {
+        setMoves(response.rows);
+        setCountPages(response.count);
+      }
 
-    if (response.status === 404) {
-      setMoves([]);
-      setCountPages(0);
+      if (response.status === 404) {
+        setMoves([]);
+        setCountPages(0);
+      }
+    } else {
+      setFetchMoves(!fetchMoves);
     }
   };
   return (
@@ -50,7 +54,7 @@ export default function SearchMoves({ page, setCountPages }) {
             label="Buscar movimiento"
             variant="filled"
             color="prussianBlue"
-            disabled={loadingMoves}
+            disabled={loadingMoves || selectedAccount === null}
             value={name}
             onChange={(event) => {
               handleSearchName(event.target.value);
@@ -64,7 +68,7 @@ export default function SearchMoves({ page, setCountPages }) {
           <IconButton
             aria-label="filter"
             onClick={handleOpen}
-            disabled={loadingMoves}
+            disabled={loadingMoves || selectedAccount === null}
           >
             <FilterAltIcon />
           </IconButton>

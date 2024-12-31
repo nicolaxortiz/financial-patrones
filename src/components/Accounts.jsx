@@ -23,6 +23,8 @@ export default function Accounts() {
     setFetchAccounts,
     fetchAccounts,
     setFilterMoves,
+    setFetchMoves,
+    fetchMoves,
   } = useContext(UseContext);
 
   const openMenu = Boolean(anchorEl);
@@ -54,6 +56,7 @@ export default function Accounts() {
     setLoadingAccounts(true);
     if (response.status === 200) {
       setFetchAccounts(!fetchAccounts);
+      setFetchMoves(!fetchMoves);
     }
   };
 
@@ -70,6 +73,7 @@ export default function Accounts() {
 
       if (response.status === 404) {
         setAccounts([]);
+        setSelectedAccount(null);
       }
     }
 
@@ -84,7 +88,9 @@ export default function Accounts() {
     }
 
     if (accounts) {
-      setLoadingAccounts(false);
+      setTimeout(() => {
+        setLoadingAccounts(false);
+      }, 1000);
     }
   }, [accounts]);
 
@@ -136,6 +142,12 @@ export default function Accounts() {
             onClick={() => handleClickAccount(account)}
           >
             <p className="account-name">{account.name}</p>
+            <p className="account-amount">
+              $
+              {(
+                parseInt(account.earnings) - parseInt(account.expenses)
+              ).toLocaleString()}
+            </p>
           </div>
         ))}
 
