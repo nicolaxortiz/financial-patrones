@@ -1,0 +1,50 @@
+.input-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+  }
+  
+  .input-box {
+    width: 50px;
+    height: 50px;
+    background-color: #F4F9E9;
+    font-size: 1.5rem;
+    text-align: center;
+    border: 2px solid #b8b8b8;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input-box:focus {
+    border-color: #536988;
+    box-shadow: 0 0 5px rgba(17, 47, 80, 0.5);
+  }
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Eliminar las flechas en Firefox */
+input[type="number"] {
+    appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 470px) {
+    .input-box {
+        width: 40px;
+        height: 40px;
+        background-color: #F4F9E9;
+        font-size: 1.5rem;
+        text-align: center;
+        border: 2px solid #b8b8b8;
+        border-radius: 8px;
+        outline: none;
+        transition: border-color 0.3s ease;
+      }
+}

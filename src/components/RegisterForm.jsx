@@ -11,6 +11,7 @@ export default function RegisterForm() {
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
+  const [alertSeverety, setAlertSeverety] = useState("");
   const [alert, setAlert] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -25,13 +26,27 @@ export default function RegisterForm() {
     setLoading(true);
     setOpen(false);
     setAlert("");
+    setAlertSeverety("");
+
     const response = await usersAPI.create(data);
 
     if (response.status === 404 || response.status === 500) {
       setTimeout(() => {
+        setAlertSeverety("error");
         setAlert(response.message);
         setOpen(true);
         setLoading(false);
+      }, 3000);
+    }
+
+    if (response.status === 200) {
+      setAlertSeverety("success");
+      setAlert("User created successfully, please try to login");
+      setOpen(true);
+
+      setTimeout(() => {
+        setLoading(false);
+        navigate("/login");
       }, 3000);
     }
   };
@@ -51,7 +66,7 @@ export default function RegisterForm() {
       <p className="title-form">Creación de cuenta</p>
 
       <Collapse in={open}>
-        <Alert severity="error" sx={{ mb: "10px" }}>
+        <Alert severity={alertSeverety} sx={{ mb: "10px" }}>
           {alert}
         </Alert>
       </Collapse>

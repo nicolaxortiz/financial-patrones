@@ -15,7 +15,7 @@ import { UseContext } from "../hooks/useContext";
 
 export default function SideMenu() {
   const navigate = useNavigate();
-  const { setUser } = useContext(UseContext);
+  const { setUser, user } = useContext(UseContext);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -30,8 +30,8 @@ export default function SideMenu() {
         direction="row"
         sx={{ margin: "20px", alignItems: "center" }}
       >
-        <Avatar alt="Nicolas" src="nada" />
-        <p className="name-menu">Nicolas Ortiz</p>
+        <Avatar alt={user?.name} src={user?.name} />
+        <p className="name-menu">{`${user?.name} ${user?.lastname}`}</p>
       </Stack>
 
       <Divider />

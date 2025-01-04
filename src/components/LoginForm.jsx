@@ -1,37 +1,42 @@
 import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { Alert } from "@mui/material";
 import { Collapse } from "@mui/material";
 import { useNavigate } from "react-router";
 import { usersAPI } from "../API/users";
+import { codesAPI } from "../API/codes";
 import { UseContext } from "../hooks/useContext";
 
-export default function LoginForm() {
+export default function LoginForm({ setOpen, setId, status }) {
   const navigate = useNavigate();
   const { setUser } = useContext(UseContext);
 
-  const [open, setOpen] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [alertSeverety, setAlertSeverety] = useState("");
   const [alert, setAlert] = useState("");
   const [loading, setLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data) => {
     setLoading(true);
-    setOpen(false);
+    setOpenAlert(false);
+    setAlertSeverety("");
     setAlert("");
     const response = await usersAPI.getbyEmailandPassword(data);
 
     if (response.status === 404 || response.status === 500) {
       setTimeout(() => {
+        setAlertSeverety("error");
         setAlert(response.message);
-        setOpen(true);
+        setOpenAlert(true);
         setLoading(false);
       }, 3000);
     }
@@ -44,7 +49,28 @@ export default function LoginForm() {
         navigate("/financial");
       }, 3000);
     }
+
+    if (response.status === 401) {
+      const codeResponse = await codesAPI.create(response.id, data.email);
+
+      if (codeResponse.status === 200) {
+        setTimeout(() => {
+          setLoading(false);
+          setId(response.id);
+          setOpen(true);
+          reset();
+        }, 3000);
+      }
+    }
   };
+
+  useEffect(() => {
+    if (status) {
+      setAlert("User validated, please login again");
+      setAlertSeverety("success");
+      setOpenAlert(true);
+    }
+  }, [status]);
 
   return (
     <div className="login-box">
@@ -60,8 +86,8 @@ export default function LoginForm() {
 
       <p className="title-form">Inicio de sesión</p>
 
-      <Collapse in={open}>
-        <Alert severity="error" sx={{ mb: "10px" }}>
+      <Collapse in={openAlert}>
+        <Alert severity={alertSeverety} sx={{ mb: "10px" }}>
           {alert}
         </Alert>
       </Collapse>

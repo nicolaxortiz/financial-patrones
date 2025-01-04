@@ -47,6 +47,9 @@ export default function Home() {
               variant="contained"
               color="littleBlue"
               sx={{ mt: "30px", width: "fit-content" }}
+              onClick={() => {
+                navigate("/register");
+              }}
             >
               Regístrate gratis
             </Button>

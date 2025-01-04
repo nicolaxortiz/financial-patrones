@@ -21,8 +21,10 @@ export default function TotalAmount() {
                   animation="wave"
                   sx={{ fontSize: "22px" }}
                 />
-              ) : (
+              ) : selectedAccount ? (
                 `$${parseInt(selectedAccount?.earnings).toLocaleString()}`
+              ) : (
+                `$---`
               )}
             </p>
           </div>
@@ -39,8 +41,10 @@ export default function TotalAmount() {
                   animation="wave"
                   sx={{ fontSize: "22px" }}
                 />
-              ) : (
+              ) : selectedAccount ? (
                 `$${parseInt(selectedAccount?.expenses).toLocaleString()}`
+              ) : (
+                `$---`
               )}
             </p>
           </div>
@@ -57,11 +61,13 @@ export default function TotalAmount() {
                   animation="wave"
                   sx={{ fontSize: "22px" }}
                 />
-              ) : (
+              ) : selectedAccount ? (
                 `$${(
                   parseInt(selectedAccount?.earnings) -
                   parseInt(selectedAccount?.expenses)
                 ).toLocaleString()}`
+              ) : (
+                `$---`
               )}
             </p>
           </div>

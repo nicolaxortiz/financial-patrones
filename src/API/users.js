@@ -28,4 +28,18 @@ export const usersAPI = {
 
     return dataResponse;
   },
+
+  updateStatus: async (id) => {
+    const response = await fetch(`${url}/updateStatus`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    });
+
+    const dataResponse = await response.json();
+
+    return dataResponse;
+  },
 };
