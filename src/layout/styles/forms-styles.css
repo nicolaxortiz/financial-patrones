@@ -1,10 +1,20 @@
 
-.form-layout{
+.form-layout-login{
     background-color: #536988;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 30px;
+}
+
+.form-layout-register{
+    background-color: #536988;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
 }
 
 .login-box{

@@ -29,6 +29,20 @@ export const usersAPI = {
     return dataResponse;
   },
 
+  getByEmail: async(email) => {
+    const response = await fetch(`${url}/forgot`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({email}),
+    });
+
+    const dataResponse = await response.json();
+
+    return dataResponse;
+  },
+
   updateStatus: async (id) => {
     const response = await fetch(`${url}/updateStatus`, {
       method: "PUT",
