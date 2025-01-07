@@ -96,6 +96,7 @@ export default function LoginForm({ setOpen, setId, status }) {
         <p className="label-form">Email</p>
         <input
           type="text"
+          disabled={loading}
           className={errors.email ? "input-form-wm" : "input-form"}
           {...register("email", {
             required: true,
@@ -116,30 +117,32 @@ export default function LoginForm({ setOpen, setId, status }) {
         <p className="label-form">Contraseña</p>
         <input
           type="password"
+          disabled={loading}
           className={errors.password ? "input-form-wm" : "input-form"}
           {...register("password", {
             required: true,
-            pattern: /^(?=.*[A-Z])(?=.*\d).{9,}$/,
           })}
         />
         {errors.password?.type === "required" && (
           <p className="input-information">* La contraseña es obligatoria</p>
         )}
-        {errors.password?.type === "pattern" && (
-          <p className="input-information">
-            * La contraseña debe tener mas de 8 caracteres, un numero y una
-            mayúscula
-          </p>
-        )}
 
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <p className="options-form-right">Olvidé mi contraseña</p>
+          <p
+            className="options-form-right"
+            onClick={() => {
+              navigate("/forgot-password");
+            }}
+          >
+            Olvidé mi contraseña
+          </p>
         </div>
 
         <LoadingButton
           variant="contained"
           type="submit"
           color="prussianBlue"
+          disabled={loading}
           loading={loading}
           fullWidth
           sx={{ color: "#fff", mt: "20px", mb: "10px" }}

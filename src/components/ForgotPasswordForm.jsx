@@ -10,77 +10,101 @@ import { codesAPI } from "../API/codes";
 import { UseContext } from "../hooks/useContext";
 
 export default function ForgotPasswordForm() {
-	const navigate = useNavigate();
-	const { setUser } = useContext(UseContext);
+  const navigate = useNavigate();
+  const { setUser } = useContext(UseContext);
 
-	const [openAlert, setOpenAlert] = useState(false);
-	const [alertSeverety, setAlertSeverety] = useState("");
-	const [alert, setAlert] = useState("");
-	const [loading, setLoading] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [alertSeverety, setAlertSeverety] = useState("");
+  const [alert, setAlert] = useState("");
+  const [loading, setLoading] = useState(false);
 
-	const {
-		register,
-		handleSubmit,
-		reset,
-		formState: { errors },
-	} = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-	const onSubmit = (data) => {
-		console.log(data);
-	};
+  const onSubmit = async (data) => {
+    setLoading(true);
+    setOpenAlert(false);
+    setAlertSeverety("");
+    setAlert("");
+    const response = await usersAPI.getByEmail(data.email);
 
-	return (
-		<div className="login-box">
-			<div
-				className="back-form"
-				onClick={() => {
-					navigate("/");
-				}}
-			>
-				<KeyboardBackspaceIcon sx={{ fontSize: "15px" }} />
-				Regresar
-			</div>
+    if (response.status === 404 || response.status === 500) {
+      setTimeout(() => {
+        setAlertSeverety("error");
+        setAlert(response.message);
+        setOpenAlert(true);
+        setLoading(false);
+      }, 3000);
+    }
 
-			<p className="title-form">Recuperar contraseña</p>
+    if (response.status === 200) {
+      setAlertSeverety("success");
+      setAlert(response.message);
+      setOpenAlert(true);
 
-			<Collapse in={openAlert}>
-				<Alert severity={alertSeverety} sx={{ mb: "10px" }}>
-					{alert}
-				</Alert>
-			</Collapse>
+      setTimeout(() => {
+        setLoading(false);
+        navigate("/login");
+      }, 3000);
+    }
+  };
 
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<p className="label-form">Email</p>
-				<input
-					type="text"
-					className={errors.email ? "input-form-wm" : "input-form"}
-					{...register("email", {
-						required: true,
-						pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i,
-					})}
-				/>
-				{errors.email?.type === "required" && (
-					<p className="input-information">
-						* El correo electrónico es obligatorio
-					</p>
-				)}
-				{errors.email?.type === "pattern" && (
-					<p className="input-information">
-						* El texto ingresado no es un correo electrónico
-					</p>
-				)}
+  return (
+    <div className="login-box">
+      <div
+        className="back-form"
+        onClick={() => {
+          navigate("/login");
+        }}
+      >
+        <KeyboardBackspaceIcon sx={{ fontSize: "15px" }} />
+        Regresar
+      </div>
 
-				<LoadingButton
-					variant="contained"
-					type="submit"
-					color="prussianBlue"
-					loading={loading}
-					fullWidth
-					sx={{ color: "#fff", mt: "20px", mb: "10px" }}
-				>
-					Continuar
-				</LoadingButton>
-			</form>
-		</div>
-	);
+      <p className="title-form">Recuperar contraseña</p>
+
+      <Collapse in={openAlert}>
+        <Alert severity={alertSeverety} sx={{ mb: "10px" }}>
+          {alert}
+        </Alert>
+      </Collapse>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <p className="label-form">Email</p>
+        <input
+          type="text"
+          className={errors.email ? "input-form-wm" : "input-form"}
+          {...register("email", {
+            required: true,
+            pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i,
+          })}
+        />
+        {errors.email?.type === "required" && (
+          <p className="input-information">
+            * El correo electrónico es obligatorio
+          </p>
+        )}
+        {errors.email?.type === "pattern" && (
+          <p className="input-information">
+            * El texto ingresado no es un correo electrónico
+          </p>
+        )}
+
+        <LoadingButton
+          variant="contained"
+          type="submit"
+          color="prussianBlue"
+          loading={loading}
+          fullWidth
+          sx={{ color: "#fff", mt: "20px", mb: "10px" }}
+        >
+          Continuar
+        </LoadingButton>
+      </form>
+    </div>
+  );
 }
