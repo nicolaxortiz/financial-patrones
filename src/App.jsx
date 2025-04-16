@@ -7,25 +7,27 @@ import Financial from "./pages/Financial.jsx";
 import Login from "./pages/Login.jsx";
 import { UseContext } from "./hooks/useContext.js";
 import useDataStates from "./hooks/useDataStates.jsx";
+import Configuration from "./pages/Configuration.jsx";
 
 export default function App() {
-	const initial = useDataStates();
-	return (
-		<BrowserRouter>
-			<UseContext.Provider value={initial}>
-				<ThemeProvider theme={theme}>
-					<Routes>
-						<Route index element={<Home />} />
-						<Route path="/login" element={<Login type="login" />} />
-						<Route path="/register" element={<Login type="register" />} />
-						<Route
-							path="/forgot-password"
-							element={<Login type="password" />}
-						/>
-						<Route path="/financial" element={<Financial />} />
-					</Routes>
-				</ThemeProvider>
-			</UseContext.Provider>
-		</BrowserRouter>
-	);
+  const initial = useDataStates();
+  return (
+    <BrowserRouter>
+      <UseContext.Provider value={initial}>
+        <ThemeProvider theme={theme}>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="/login" element={<Login type="login" />} />
+            <Route path="/register" element={<Login type="register" />} />
+            <Route
+              path="/forgot-password"
+              element={<Login type="password" />}
+            />
+            <Route path="/financial" element={<Financial />} />
+            <Route path="/configuration" element={<Configuration />} />
+          </Routes>
+        </ThemeProvider>
+      </UseContext.Provider>
+    </BrowserRouter>
+  );
 }

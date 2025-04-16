@@ -29,13 +29,13 @@ export const usersAPI = {
     return dataResponse;
   },
 
-  getByEmail: async(email) => {
+  getByEmail: async (email) => {
     const response = await fetch(`${url}/forgot`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({email}),
+      body: JSON.stringify({ email }),
     });
 
     const dataResponse = await response.json();
@@ -50,6 +50,20 @@ export const usersAPI = {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ id }),
+    });
+
+    const dataResponse = await response.json();
+
+    return dataResponse;
+  },
+
+  update: async (data) => {
+    const response = await fetch(`${url}/update`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     });
 
     const dataResponse = await response.json();

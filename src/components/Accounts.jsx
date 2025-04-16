@@ -1,11 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import { Button, Stack, Skeleton, Menu, MenuItem } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 import AccountModal from "./AccountModal";
 import { accountsAPI } from "../API/accounts";
 import AddIcon from "@mui/icons-material/Add";
 import { UseContext } from "../hooks/useContext";
 import { Delete, Edit } from "@mui/icons-material";
-import { set } from "react-hook-form";
+import PersonIcon from "@mui/icons-material/Person";
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 
 export default function Accounts() {
   const [openModal, setOpenModal] = React.useState(false);
@@ -26,6 +28,13 @@ export default function Accounts() {
     setFetchMoves,
     fetchMoves,
   } = useContext(UseContext);
+
+  const types = [
+    { id: 1, name: "Personal - ahorro" },
+    { id: 2, name: "Personal - inversion" },
+    { id: 3, name: "Empresarial - ahorro" },
+    { id: 4, name: "Empresarial - inversion" },
+  ];
 
   const openMenu = Boolean(anchorEl);
 
@@ -141,13 +150,29 @@ export default function Accounts() {
             onContextMenu={(event) => handleClickMenu(event, account)}
             onClick={() => handleClickAccount(account)}
           >
-            <p className="account-name">{account.name}</p>
-            <p className="account-amount">
-              $
-              {(
-                parseInt(account.earnings) - parseInt(account.expenses)
-              ).toLocaleString()}
-            </p>
+            <Grid container spacing={1}>
+              <Grid size={6}>
+                {account.id_account_type <= 2 ? (
+                  <PersonIcon sx={{ fontSize: "25px", marginY: "10px" }} />
+                ) : (
+                  <BusinessCenterIcon
+                    sx={{ fontSize: "25px", marginY: "10px" }}
+                  />
+                )}
+                <p className="account-amount">
+                  {types.find((t) => t.id === account.id_account_type).name}
+                </p>
+              </Grid>
+              <Grid size={6}>
+                <p className="account-name">{account.name}</p>
+                <p className="account-amount">
+                  $
+                  {(
+                    parseInt(account.earnings) - parseInt(account.expenses)
+                  ).toLocaleString()}
+                </p>
+              </Grid>
+            </Grid>
           </div>
         ))}
 

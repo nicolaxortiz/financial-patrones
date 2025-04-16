@@ -5,6 +5,7 @@ import { Box, Stack, Button, Collapse, Alert, TextField } from "@mui/material";
 import "../app.css";
 import { accountsAPI } from "../API/accounts";
 import { UseContext } from "../hooks/useContext";
+import MenuItem from "@mui/material/MenuItem";
 import { LoadingButton } from "@mui/lab";
 
 export default function AccountModal({
@@ -19,6 +20,13 @@ export default function AccountModal({
   const [openAlert, setOpenAlert] = useState(false);
   const [alert, setAlert] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const accountTypes = [
+    { id: 1, name: "Personal - ahorro" },
+    { id: 2, name: "Personal - inversion" },
+    { id: 3, name: "Empresarial - ahorro" },
+    { id: 4, name: "Empresarial - inversion" },
+  ];
 
   const {
     register,
@@ -35,7 +43,11 @@ export default function AccountModal({
 
     const response =
       method === "create"
-        ? await accountsAPI.create({ name: data.name, id_user: user.id })
+        ? await accountsAPI.create({
+            name: data.name,
+            id_user: user.id,
+            id_account_type: data.id_account_type,
+          })
         : await accountsAPI.update(selectedAccount.id, data);
 
     if (response.status === 200) {
@@ -86,6 +98,7 @@ export default function AccountModal({
             color="indigoDye"
             disabled={loading}
             fullWidth
+            sx={errors.name ? { mb: "0px" } : { mb: "20px" }}
             {...register("name", {
               required: true,
               pattern: /^[A-Za-zñÑ0-9 áéíóúÁÉÍÓÚ]+$/,
@@ -102,6 +115,29 @@ export default function AccountModal({
               * El nombre no puede contener caracteres especiales
             </p>
           )}
+
+          <TextField
+            id="outlined-select-account"
+            select
+            label="Tipo de cuenta"
+            variant="filled"
+            disabled={loading}
+            color="indigoDye"
+            defaultValue={
+              method === "update" ? selectedAccount.id_account_type : ""
+            }
+            fullWidth
+            sx={errors.id_account ? { mb: "0px" } : { mb: "20px" }}
+            {...register("id_account_type", {
+              required: true,
+            })}
+          >
+            {accountTypes.map((account) => (
+              <MenuItem key={account.id} value={account.id}>
+                {account.name}
+              </MenuItem>
+            ))}
+          </TextField>
 
           <Stack
             direction="row"

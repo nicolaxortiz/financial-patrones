@@ -140,7 +140,7 @@ export default function RegisterForm() {
           </p>
         )}
 
-        <p className="label-form">Celular</p>
+        {/* <p className="label-form">Celular</p>
         <input
           type="number"
           className={errors.phone ? "input-form-wm" : "input-form"}
@@ -158,7 +158,7 @@ export default function RegisterForm() {
           <p className="input-information">
             * El numero de celular no puede contener letras
           </p>
-        )}
+        )} */}
 
         <p className="label-form">Email</p>
         <input

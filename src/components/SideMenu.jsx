@@ -10,6 +10,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Logout } from "@mui/icons-material";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { useNavigate } from "react-router";
 import { UseContext } from "../hooks/useContext";
 
@@ -36,6 +37,19 @@ export default function SideMenu() {
 
       <Divider />
       <List>
+        <ListItem disablePadding>
+          <ListItemButton
+            onClick={() => {
+              navigate("/configuration");
+            }}
+          >
+            <ListItemIcon>
+              <ManageAccountsIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Editar datos"} />
+          </ListItemButton>
+        </ListItem>
+
         <ListItem disablePadding>
           <ListItemButton
             onClick={() => {
