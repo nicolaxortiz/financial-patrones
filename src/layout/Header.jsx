@@ -21,13 +21,19 @@ export default function Header() {
   return (
     <div className="header-box">
       <Grid container spacing={2} sx={{ height: "100%", alignItems: "center" }}>
-        <Grid size={{ xs: 3, md: 8 }} sx={{ justifyItems: "flex-start" }}>
+        <Grid
+          size={{ xs: 3, md: 8 }}
+          sx={{ display: "flex", justifyContent: "flex-start" }}
+        >
           <Logo />
         </Grid>
 
         {/* Skeleton loading */}
         {loading && (
-          <Grid size={{ xs: 9, md: 4 }} sx={{ justifyItems: "flex-end" }}>
+          <Grid
+            size={{ xs: 9, md: 4 }}
+            sx={{ display: "flex", justifyContent: "flex-end" }}
+          >
             <Stack direction="row" spacing={2} sx={{ margin: "25px" }}>
               <Skeleton
                 variant="rounded"
@@ -47,7 +53,10 @@ export default function Header() {
 
         {/* Options Buttons */}
         {!user?.name && !loading && (
-          <Grid size={{ xs: 9, md: 4 }} sx={{ justifyItems: "flex-end" }}>
+          <Grid
+            size={{ xs: 9, md: 4 }}
+            sx={{ display: "flex", justifyContent: "flex-end" }}
+          >
             <HeaderButtons />
           </Grid>
         )}
