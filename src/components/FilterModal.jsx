@@ -8,7 +8,7 @@ import { Box } from "@mui/material";
 import { Stack } from "@mui/material";
 import { Button } from "@mui/material";
 import "../app.css";
-import { UseContext } from "../hooks/useContext";
+import { UseContext } from "../hooks/UseContext";
 
 export default function FilterModal({ handleClose, open }) {
   const {

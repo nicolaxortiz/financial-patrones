@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import Forms from "../layout/Forms";
-import { UseContext } from "../hooks/useContext";
+import { UseContext } from "../hooks/UseContext";
 import { useNavigate } from "react-router";
 import useValidateUser from "../hooks/useValidateUser";
 

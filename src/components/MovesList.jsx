@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { UseContext } from "../hooks/useContext";
+import { UseContext } from "../hooks/UseContext";
 import { Skeleton } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";

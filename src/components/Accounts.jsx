@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid2";
 import AccountModal from "./AccountModal";
 import { accountsAPI } from "../API/accounts";
 import AddIcon from "@mui/icons-material/Add";
-import { UseContext } from "../hooks/useContext";
+import { UseContext } from "../hooks/UseContext";
 import { Delete, Edit } from "@mui/icons-material";
 import PersonIcon from "@mui/icons-material/Person";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";

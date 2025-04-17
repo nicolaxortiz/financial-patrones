@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid2";
 import { IconButton, TextField } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterModal from "./FilterModal";
-import { UseContext } from "../hooks/useContext";
+import { UseContext } from "../hooks/UseContext";
 import { movesAPI } from "../API/moves";
 
 export default function SearchMoves({ page, setCountPages }) {

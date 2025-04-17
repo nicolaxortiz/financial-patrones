@@ -10,7 +10,7 @@ import { Alert } from "@mui/material";
 import { Collapse } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import "../layout/styles/main-styles.css";
-import { UseContext } from "../hooks/useContext";
+import { UseContext } from "../hooks/UseContext";
 import { usersAPI } from "../API/users";
 
 export default function UpdateUserForm() {

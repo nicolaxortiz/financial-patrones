@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { UseContext } from "./useContext.js";
+import { UseContext } from "./UseContext.js";
 
 export default function useValidateUser() {
   const { setUser } = useContext(UseContext);

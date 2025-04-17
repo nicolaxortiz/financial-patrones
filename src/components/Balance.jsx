@@ -5,7 +5,7 @@ import MoveModal from "./MoveModal";
 import TotalAmount from "./TotalAmount";
 import SearchMoves from "./SearchMoves";
 import MovesList from "./MovesList";
-import { UseContext } from "../hooks/useContext";
+import { UseContext } from "../hooks/UseContext";
 
 export default function Balance() {
   const [method, setMethod] = React.useState("");

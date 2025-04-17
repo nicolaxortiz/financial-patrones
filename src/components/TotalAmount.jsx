@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import { Skeleton } from "@mui/material";
-import { UseContext } from "../hooks/useContext";
+import { UseContext } from "../hooks/UseContext";
 
 export default function TotalAmount() {
   const { moves, loadingAccounts, selectedAccount } = useContext(UseContext);

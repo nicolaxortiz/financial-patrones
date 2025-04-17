@@ -7,7 +7,7 @@ import { Collapse } from "@mui/material";
 import { useNavigate } from "react-router";
 import { usersAPI } from "../API/users";
 import { codesAPI } from "../API/codes";
-import { UseContext } from "../hooks/useContext";
+import { UseContext } from "../hooks/UseContext";
 
 export default function ForgotPasswordForm() {
   const navigate = useNavigate();

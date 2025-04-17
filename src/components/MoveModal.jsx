@@ -13,7 +13,7 @@ import { DateField } from "@mui/x-date-pickers";
 import MenuItem from "@mui/material/MenuItem";
 import { useForm } from "react-hook-form";
 import "../app.css";
-import { UseContext } from "../hooks/useContext";
+import { UseContext } from "../hooks/UseContext";
 import { movesAPI } from "../API/moves";
 import dateParser from "../functions/dateParser";
 import dayjs from "dayjs";

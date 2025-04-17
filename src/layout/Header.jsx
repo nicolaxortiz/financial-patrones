@@ -4,7 +4,7 @@ import Logo from "../components/Logo";
 import HeaderButtons from "../components/HeaderButtons";
 import HeaderUser from "../components/HeaderUser";
 import Grid from "@mui/material/Grid2";
-import { UseContext } from "../hooks/useContext";
+import { UseContext } from "../hooks/UseContext";
 import Skeleton from "@mui/material/Skeleton";
 import { Stack } from "@mui/material";
 
