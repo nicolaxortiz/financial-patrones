@@ -27,6 +27,7 @@ export default function MoveModal({ handleClose, open, method }) {
     fetchAccounts,
     selectedMove,
     selectedAccount,
+    setLoadingAccounts,
   } = useContext(UseContext);
 
   const [openAlert, setOpenAlert] = React.useState(false);
