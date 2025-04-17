@@ -191,7 +191,7 @@ export default function MoveModal({ handleClose, open, method }) {
                 method === "update" ? dayjs(selectedMove.date) : dayjs()
               }
               fullWidth
-              timezone="America/New_York"
+              timezone="UTC"
               format="MM/DD/YYYY"
               sx={errors.date ? { mb: "0px" } : { mb: "20px" }}
               {...register("date", {
