@@ -5,7 +5,7 @@ import { theme } from "./theme/theme.js";
 import Home from "./pages/Home.jsx";
 import Financial from "./pages/Financial.jsx";
 import Login from "./pages/Login.jsx";
-import { UseContext } from "./hooks/useContext.js";
+import { UseContext } from "./hooks/UseContext.js";
 import useDataStates from "./hooks/useDataStates.jsx";
 import Configuration from "./pages/Configuration.jsx";
 
