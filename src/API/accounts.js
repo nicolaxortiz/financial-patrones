@@ -1,4 +1,4 @@
-const url = "http://localhost:3000/api/accounts";
+const url = "https://backend-financial-patrones.vercel.app/api/accounts";
 
 export const accountsAPI = {
   getByID: async (id) => {

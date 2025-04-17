@@ -1,4 +1,4 @@
-const url = "http://localhost:3000/api/users";
+const url = "https://backend-financial-patrones.vercel.app/api/users";
 
 export const usersAPI = {
   create: async (data) => {
